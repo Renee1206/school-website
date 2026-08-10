@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-Tw">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新生專區</title>
+    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+               #back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    animation: float 3s ease-in-out infinite;
+    display: none; /* 初始化為隱藏 */
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+        footer {
+  margin-top: 70px; 
+  padding-top: 30px;
+}
+        
+        .header {
+            margin-left: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 20px;
+            padding-bottom: 300px;
+        }
+        .back-to-home {
+            margin-right: 150px;
+        }
+        .sc{
+            display: flex;
+            align-items:center;
+        }
+        .imga {
+            text-align: center;
+            margin-left: 270px;
+            margin-top: -275px;
+        }
+        .imga img {
+            width: 50%;
+            height: auto;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .imga img:hover {
+            transform: scale(1.3);
+        }
+        .walking-person {
+            width: 235px;
+            height: 250px;
+            margin-right: -15px;
+            margin-top: -240px;
+            background-image: url('img/student-page-illustration.png');
+            background-size: cover;
+            animation: walk 2.75s steps(8) infinite;
+        }
+        @keyframes walk {
+            0% { background-position: 800px 0; }
+            100% { background-position: 0 0; }
+        }
+        .c {
+            display: flex;
+        }
+        #latest-news {
+            margin-top: 130px;
+            margin-left: 225px;
+        }
+        .lastest-text, .news-text {
+            font-size: 40px;
+            font-weight: bold;
+            font-family: 'Arial Black', sans-serif;
+            animation: fadeInUp infinite 3s ease-in-out;
+        }
+        .news-content {
+            margin-top: 10px;
+            font-size: 26px;
+            font-weight: bold;
+            animation: fadeInUp infinite 3s ease-in-out;
+        }
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 175px;
+        }
+   .button {
+    width: 30%;
+    height: 100px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -30px;
+    transition: background-color 0.3s, color 0.3s, border 0.3s; /* 添加过渡效果 */
+}
+
+.button a {
+    color: white;
+    text-decoration: none;
+}
+
+.button:hover {
+    background-color: white;
+    color: #4CAF50;
+    border: 2px solid #4CAF50; /* 添加边框 */
+}
+
+.button:hover a {
+    color: #4CAF50; /* 确保链接文字在懸停时變為綠色 */
+}
+
+
+
+        .floating-image {
+            display: block;
+            margin: 20px auto;
+            width: 400px;
+            height: auto;
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            left: -60px;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        .list-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: -130px; /* 更小的垂直距離 */
+            margin-top: -30px; /* 更小的垂直距離 */
+            margin-left: 120px;
+        }
+        .list1 {
+            width: 400px;
+            margin-right: 10px;
+        }
+        .download-btn {
+            margin-left: -65px;
+            margin-top: -175px;
+            padding: 5px 10px;
+            border-radius: 3px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            background-color: #008CBA;
+            color: white;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .download-btn:hover {
+            transform: scale(1.1);
+            background-color: #005f6b;
+            opacity: 0.8;
+        }
+        .container12 {
+            display: flex;
+            margin-top: 100px;
+            width: 650px;
+            height: 250px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+        .left12 {
+            width: 25%;
+            background-color: #ADD8E6;
+            display: flex;
+            font-size: 20px;
+            font-weight: bold;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            font-size: 30px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .right12 {
+            width: 75%;
+            background-color: #FFFFE0;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .right-content12{
+            text-align: left;
+        }
+        .header h1 {
+            opacity: 0;
+            animation: fadeInUp 1s forwards;
+        }
+        /* 閃爍效果 */
+@keyframes blink {
+    0%, 100% {
+        background-color: #ADD8E6;
+    }
+    50% {
+        background-color: #EAB464; /* 閃爍的顏色 */
+    }
+}
+
+.left12.blink {
+    animation: blink 2s infinite;
+}
+
+        
+    </style>
+</head>   
+<body>
+    <main class="grid-container">
+        <header>
+            <div class="search-container">
+                <form id="search-form">
+                    <input type="text" id="search-input" placeholder="輸入搜尋內容...">
+                    <button type="submit">搜尋</button>
+                </form>
+            </div>
+
+            <div id="search-results">
+                <!-- 這裡顯示搜尋結果 -->
+            </div>
+            <div><a href="index.html">
+                <input type="image" src="img/school-logo-header.png"></a>
+            </div>
+            <div class="font-controls">
+                <button onclick="changeFontSize(-1)">A-</button><!--字體變小-->
+                <button onclick="resetFontSize()">A</button><!--字體復原-->
+                <button onclick="changeFontSize(1)">A+</button><!--字體變大-->
+            </div>
+            <script>
+                function changeFontSize(value) {
+                    let currentSize = parseFloat(window.getComputedStyle(document.body).fontSize);
+                    let newSize = currentSize + value;
+                    document.body.style.fontSize = Math.max(12, Math.min(30, newSize)) + 'px';
+                }
+                function resetFontSize() {
+                    document.body.style.fontSize = '16px';
+                }
+                document.getElementById("search-form").addEventListener("submit", function (event) {
+                    event.preventDefault(); // 防止表單提交刷新頁面
+
+                    const searchInput = document.getElementById("search-input").value.toLowerCase();
+                    const navLinks = document.querySelectorAll("nav a");
+                    const listItems = document.querySelectorAll(".list-menu a");
+                    let searchResults = ""; // 儲存搜尋結果的字串
+
+                    navLinks.forEach(link => {
+                        if (link.textContent.toLowerCase().includes(searchInput)) {
+                            searchResults += "<p><a href='" + link.href + "'>" + link.textContent + "</a></p>"; // 將匹配的結果添加到 searchResults
+                        }
+                    });
+
+                    listItems.forEach(item => {
+                        if (item.textContent.toLowerCase().includes(searchInput)) {
+                            searchResults += "<p><a href='" + item.href + "'>" + item.textContent + "</a></p>"; // 將匹配的結果添加到 searchResults
+                        }
+                    });
+
+                    if (searchResults === "") {
+                        searchResults = "<p>沒有找到匹配的結果。</p>";
+                    }
+
+                    // 創建對話框
+                    const dialog = document.createElement("dialog");
+                    dialog.className = "dialog-container"; // 添加樣式
+                    dialog.innerHTML = searchResults;
+                    dialog.style.width = "70%"; // 設置對話框寬度
+
+                    // 添加關閉按鈕
+                    const closeButton = document.createElement("button");
+                    closeButton.textContent = "✖";
+                    closeButton.className = "close-btn";
+                    closeButton.style.position = "absolute"; // 設置按鈕位置
+                    closeButton.style.top = "5px"; // 設置按鈕距離頂部的距離
+                    closeButton.style.right = "5px"; // 設置按鈕距離右側的距離
+                    closeButton.onclick = function () {
+                        dialog.close();
+                    };
+                    dialog.appendChild(closeButton);
+
+                    // 將對話框添加到
+                    document.body.appendChild(dialog);
+                                    // 等待所有代碼執行完畢後顯示對話框
+                setTimeout(function () {
+                    dialog.showModal();
+                }, 0);
+            });
+
+
+        </script>
+    </header>
+    
+        <nav><ul class="menu">
+                <li><a href="index.html">回首頁</a>
+                </li>
+                <li><a href="school-profile.html"><i class="fas fa-info-circle"></i> 認識東中</a>
+                    <ul>
+                        <li><a href="school-profile.html#0001"><i class="fas fa-shield-alt"></i> 校徽與校訓</a></li>
+                        <li><a href="school-profile.html#0002"><i class="fas fa-music"></i> 校歌</a></li>
+                        <li><a href="school-profile.html#0003"><i class="fas fa-map-marked-alt"></i> 地理交通</a></li>
+                        <li><a href="school-profile.html#0004"><i class="fas fa-map"></i> 校園平面圖</a></li>
+                        <li><a href="https://www.facebook.com/ctsh.hcc.edu.tw/?ref=embed_page" target="_blank"><i class="fab fa-facebook-square"></i> FB粉絲團</a></li>
+                    </ul>
+                </li>
+                <li><a href="administrative-offices.html"><i class="fas fa-building"></i> 行政單位</a>
+                    <ul>
+                        <li><a href="administrative-offices.html#0200"><i class="fas fa-user-tie"></i> 校長室</a></li>
+                        <li><a href="administrative-offices.html#0201"><i class="fas fa-graduation-cap"></i> 教務處</a></li>
+                        <li><a href="administrative-offices.html#0202"><i class="fas fa-user-graduate"></i> 學務處</a></li>
+                        <li><a href="administrative-offices.html#0203"><i class="fas fa-briefcase"></i> 總務處</a></li>
+                        <li><a href="administrative-offices.html#0204"><i class="fas fa-user-friends"></i> 輔導處</a></li>
+                        <li><a href="administrative-offices.html#0205"><i class="fas fa-book"></i> 圖書館</a></li>
+                        <li><a href="administrative-offices.html#0206"><i class="fas fa-user"></i> 人事室</a></li>
+                        <li><a href="administrative-offices.html#0207"><i class="fas fa-calculator"></i> 主計室</a></li>
+                        <li><a href="administrative-offices.html#0208"><i class="fas fa-chalkboard-teacher"></i> 教官室</a></li>
+                        <li><a href="administrative-offices.html#0209"><i class="fas fa-user-graduate"></i> 進修部</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1EZ3lNelV4TWpRPTBrRE0zY1ROeFlrVGludGVseQ==&c=T0RESU1UZ3dPRGsyTkRFPXdFVE0wQWpOeElrVGludGVseQ==&d="  target="_blank"><i class="fas fa-scroll"></i> 校務章則</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU5UVXlPRFV5T1RRPTVVVE0zY1ROeGNsVGludGVseQ==" target="_blank"><i class="fas fa-phone"></i> 處室分機</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#"><i class="fas fa-user-graduate"></i> 學生專區</a>
+                    <ul>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/Self-learning/" target="_blank"><i class="fas fa-book-open"></i> 自主學習</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1qY3pPREUzT0RRPTVrek13a1ROeGNsVGludGVseQ==" target="_blank"><i class="fas fa-university"></i> 大學榜單</a></li>
+                        <li><a href="https://jg8web.jhenggao.com/iSystemEntrance/" target="_blank"><i class="fas fa-university"></i> 大學選考系統入考</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/schoolbus/" target="_blank"><i class="fas fa-bus"></i> 學生交通車專區</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1UQXpPVFF6T0RFPTBrRE0zY1ROeFlrVGludGVseQ==&c=T0RESU5USTFNRE0yTlRVPTBrak0wQWpOeElrVGludGVseQ==&d=" target="_blank"><i class="fas fa-file-alt"></i> 學生手冊(含請假單)</a></li>
+                        <li><a href="https://collego.edu.tw/"><i class="fas fa-graduation-cap"></i> ColleGo!輔助系統</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU56UTBNVFF6TlRRPTBZVE81Z1ROeGNsVGludGVseQ=="><i class="fas fa-trophy"></i> 多媒體設計競賽</a></li>
+                    </ul>
+                </li>
+                <li><a href="new-students.html"><i class="fas fa-baby"></i> 新生專區</a>
+                   
+                </li>
+                <li><a href="#"><i class="fas fa-users"></i> 其他組織</a>
+                    <ul>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1UZ3hNRFV5TXpjPXlRRE00Y1ROeGNsVGludGVseQ==" target="_blank"><i class="fas fa-user-friends"></i> 家長會</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1qY3lNek00TVRVPXlRRE00Y1ROeGNsVGludGVseQ==" target="_blank"><i class="fas fa-users"></i> 校友會</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/teacher/" target="_blank"><i class="fas fa-users"></i> 教師會</a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="fas fa-link"></i> 常用連結</a>
+            <ul>
+                <li><a href="https://sch.ctsh.hcc.edu.tw/classtable/" target="_blank"><i class="fas fa-calendar-alt"></i> 課表查詢系統</a></li>
+                <li><a href="https://ctsh.teams.com.tw/login.html" target="_blank"><i class="fas fa-globe"></i> 竹東高中數位雲端學習學院</a></li>
+                <li><a href="https://sites.google.com/view/ctshpicture/" target="_blank"><i class="fas fa-images"></i> 網路相簿</a></li>
+                <li><a href="https://www.youtube.com/user/ctshbcc"  target="_blank"><i class="fas fa-film"></i> 活動影片</a></li>
+                <li><a href="https://eng.ctsh.hcc.edu.tw/livegept/login/login.php" target="_blank"><i class="fas fa-pen"></i> 全民英檢系統</a></li>
+            </ul>
+        </li>
+                <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1qUTVPVFE0TWprPTBRVE13UWpOeGNsVGludGVseQ==" target="_blank"><i class="fas fa-file-archive"></i> 學習歷程檔案</a>
+              
+                </li>
+                <li>
+                    <a href="academic-calendar.html"><i class="fas fa-calendar-alt"></i> 行事曆</a> 
+                </li>
+            </ul>
+        </nav>
+        
+    <section>
+        
+        <div class="header">
+            <h1>新生重要時程</h1>
+            
+        </div>
+    <div class="sc">
+        <div class="imga">
+            <img src="img/admissions-timeline.png" alt="Admissions timeline">
+        </div>
+        <div class="walking-person"></div>
+    </div>
+        <div class="c">
+        <div id="latest-news">
+            <div class="news-title">
+                <span class="lastest-text">教務處</span>
+                <br>
+                <span class="news-text">相關宣布事項</span>
+            </div>
+            
+         
+            <img src="img/announcement-illustration.png" class="floating-image" alt="Announcement illustration">
+            
+        </div>
+
+        
+  <section>          
+<div class="button-container">
+    <button class="button"><a href="https://reurl.cc/eD3nKj"target="_blank">新生線上預填報到連結</a></button>
+    <button class="button"><a href="https://reurl.cc/jD12xM"target="_blank">112年入學高一學生選填專班調查表</a></button>
+    <button class="button"><a href="https://reurl.cc/2LQ6kr"target="_blank">112年學生暑假作業(含高一新生)</a></button>
+</div>
+      <div class="list-container">
+                    <p class="list1">112新生報到手冊</p>
+                    <div class="button-container">
+                        <button class="download-btn" data-file-path="file/new-student-registration-handbook-2023.pdf">下載</button>
+                    </div>
+                </div>
+       <div class="list-container">
+                    <p class="list1">112-1各項特殊身分減免申請表_新生用</p>
+                    <div class="button-container">
+                        <button class="download-btn" data-file-path="file/tuition-fee-waiver-application-2023-fall.pdf">下載</button>
+                    </div>
+                </div>
+       <div class="list-container">
+                    <p class="list1">國立竹東高中專班設置要點</p>
+                    <div class="button-container">
+                        <button class="download-btn" data-file-path="file/special-program-guidelines.pdf">下載</button>
+                    </div>
+                </div>
+       <div class="list-container">
+                    <p class="list1">2023繁星錄取</p>
+                    <div class="button-container">
+                        <button class="download-btn" data-file-path="file/star-program-admissions-2023.pdf">下載</button>
+                    </div>
+                </div>
+      
+       
+
+             
+        
+            </section>
+        </div>    
+        
+        
+        <div class="c">
+        <div id="latest-news">
+            <div class="news-title">
+                <span class="lastest-text">學務處</span>
+                <br>
+                <span class="news-text">相關宣布事項</span>
+            </div>
+            
+         
+            <img src="img/announcement-illustration.png" class="floating-image" alt="Announcement illustration">
+            
+        </div>
+
+        
+  <section>          
+<div class="container12">
+        <div class="left12 blink">專車申請</div>
+        <div class="right12">
+            <div class="right-content12">
+                提醒：開學或暑輔期間，有意同學搭乘專車的同學，麻煩儘速完成報名，詳細說明都在以下學校網頁公告中。<br><br>
+                學校公告(有詳細說明及Q&A): <a href="https://reurl.cc/MAWaWk" target="_blank">https://reurl.cc/MAWaWk</a><br>
+                若校網不通時，可多試幾次，若還是不通，則用以下網址(沒有Q&A)，直接到公司網頁，但請都必須詳閱說明，再實施報名，以免遇到不必要的問題，謝謝。<br><br>
+                專車公司網頁(別選錯學校): <a href="http://www.chgobus.url.tw/" target="_blank">http://www.chgobus.url.tw/</a>
+            </div>
+        </div>
+    </div>
+      <div class="list-container">
+                    <p class="list1">112新生始業輔導手冊--1120727</p>
+                    <div class="button-container">
+                        <button class="download-btn" data-file-path="file/new-student-registration-handbook-2023.pdf">下載</button>
+                    </div>
+                </div>
+       <div class="list-container">
+                    <p class="list1">112竹東高中高一新生健檢家長通知書</p>
+                    <div class="button-container">
+                        <button class="download-btn" data-file-path="file/tuition-fee-waiver-application-2023-fall.pdf">下載</button>
+                    </div>
+                </div>
+       <div class="list-container">
+                    <p class="list1">112竹東高中高一新生健檢注意事項</p>
+                    <div class="button-container">
+                        <button class="download-btn" data-file-path="file/special-program-guidelines.pdf">下載</button>
+                    </div>
+                </div>
+      <div class="container12">
+        <div class="left12 blink">宿舍申請</div>
+        <div class="right12">
+            <div class="right-content12">
+                竹東高中學生宿舍申請，公告網頁如下，如有需要，請詳閱內容後，上網填報：<a href="https://reurl.cc/QX7ye0" target="_blank">https://reurl.cc/QX7ye0/</a>
+            </div>
+        </div>
+    </div>
+      <div class="list-container">
+                    <p class="list1">112新生始業輔導手冊--1120727</p>
+                    <div class="button-container">
+                        <button class="download-btn" data-file-path="file/new-student-orientation-handbook-2023.pdf">下載</button>
+                    </div>
+                </div>
+       <div class="list-container">
+                    <p class="list1">112竹東高中高一新生健檢家長通知書</p>
+                    <div class="button-container">
+                        <button class="download-btn" data-file-path="file/new-student-health-exam-parent-notice-2023.pdf">下載</button>
+                    </div>
+                </div>
+       <div class="list-container">
+                    <p class="list1">112竹東高中高一新生健檢注意事項</p>
+                    <div class="button-container">
+                        <button class="download-btn" data-file-path="file/new-student-health-exam-notes-2023.pdf">下載</button>
+                    </div>
+                </div>
+       
+
+             
+        
+            </section>
+        </div>    
+    </section>
+        
+        
+   
+        
+
+        
+        
+    <footer>
+            <p><a href="https://www.ctsh.hcc.edu.tw/" style="color: #333" target="_blank">國立竹東高級中學 National Chutung Senior High School</a></p>
+        <p>
+            <i class="fas fa-phone" style="color: #333;"></i>
+            <a href="tel:+886-3-6211166" style="color: #333;">03-6211166</a>
+        </p>
+        <p>傳真：03-5944069</p>
+        <p>
+            <i class="fas fa-map-marker-alt" style="color: #333;"></i>
+            <a href="https://maps.google.com/?q=31046+新竹縣竹東鎮大林路二號" style="color: #333;" target="_blank">校址：31046 新竹縣竹東鎮大林路二號</a>
+        </p>
+        <a href="https://www.facebook.com/ctsh.hcc.edu.tw/?ref=embed_page" target="_blank"><i class="fa-brands fa-facebook fa-fw fa-2x"></i>facebook</a>
+        <a href="https://www.youtube.com/@ctshbcc" target="_blank"><i class="fa-brands fa-youtube fa-fw fa-2x"></i> YouTube</a>
+        </footer>
+        <img src="img/back-to-top-rocket.png" id="back-to-top" alt="Back to Top">
+        <script>
+        
+    // 當滾動時顯示/隱藏火箭按鈕
+    window.addEventListener('scroll', function() {
+        const backToTopButton = document.getElementById('back-to-top');
+        if (window.scrollY > 200) { // 滾動超過200px時顯示按鈕
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
+
+    // 點擊火箭按鈕返回頂部
+    document.getElementById('back-to-top').addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+</main>
+</body>
+</html>

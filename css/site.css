@@ -1,0 +1,447 @@
+* {
+    box-sizing: border-box;
+}  
+body {
+    font-family: "Noto Sans CJK TC", "Microsoft JhengHei", PingFang, STHeiti, sans-serif, serif;
+    font-size: 16px;
+}
+a {
+    text-decoration: none; /*移除超連結底線*/
+}
+/*grid容器設定*/
+.grid-container {
+    display: grid;
+    grid-template-areas: 
+        'header header header header header header' /*header要占據6欄*/
+        'nav nav nav nav nav nav' /*nav要占據6欄*/
+        'slider slider slider slider slider slider' /*slider要占據6欄*/
+        'left middle middle middle middle right'  /*left占1欄，middle占4欄，right占1欄*/
+        'footer footer footer footer footer footer'; /*footer要占據6欄*/
+    grid-gap: 10px 10px;   /*間隔設定*/
+}   
+/*header樣式*/
+header {
+    position: relative;
+    grid-area: header;
+    background-color: #d1c7b7;
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px;
+}
+.dialog-container {
+    padding: 20px;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px; /* 控制對話框最大寬度 */
+}
+
+.dialog-container button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.dialog-container button:hover {
+    background-color: #d32f2f;
+}
+/*搜尋*/
+.search-container {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+.search-container input[type="text"] {
+    padding: 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+    border: none;
+    border-radius: 5px;
+}
+.search-container button {
+    padding: 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.search-container button:hover {
+    background: #ccc;
+}
+.font-controls {
+    position: absolute;
+    top: 70%;
+    right: 0;
+}
+.font-controls button {
+    padding: 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* 為圖片連播器設置樣式 */
+#slider {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 10px; /* Optional: add some space below the slider */
+    grid-column: 1 / -1; /* 使 slider 佔據整個行 */
+}
+
+#slider img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.bg6 ul {
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+    flex-wrap: wrap;
+   }
+
+.bg6 ul>li {
+    text-align: center;
+    margin-bottom: 33px;
+}
+
+.bg6 ul>li>a {
+    width: 180px;
+    height: 180px;
+    border-radius: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 20px;
+    background-color:#C1FFC1;
+}
+.bg6>ul>li a:hover {
+        transform: translateY(-5px) scale(1.1);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+.bg6 ul>li span {
+    color: #333;
+    font-size: 1.4em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-top: 15px;
+    width: 200px;
+    text-align: center;
+    display: inline-block;
+}
+.bg6 ul>li>a>i{
+            font-size: 45px;
+    }
+/*導覽列*/
+nav {
+    position: sticky;
+    top: 0;
+    width: 100%; /* 使導覽行佔據整個畫面的寬度 */
+    z-index: 1000;
+    grid-area: nav;
+    text-align: center;
+    font-size: 14px;
+    /*border-bottom: solid 10px #cebba5;*/
+    border-radius: 10px;
+    background-color: #2f2818; /* 導覽行的背景顏色 */
+}
+/*導覽列三層選單設定*/
+ul {  /*取消ul預設的內縮及項目符號樣式*/
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.menu {
+    display: inline-block; 
+}
+.menu li {
+    position: relative;
+    white-space: nowrap;
+    border-right: #f7e8dd 1px solid;
+}
+.menu > li:last-child {
+    border-right: none;
+}
+.menu > li {
+    float: left; /*選單第一層由左到右顯示*/
+}
+.menu a { /*選單樣式設定*/
+    display: block;
+    padding: 0 30px;
+    background-color: #2f2818; /*導覽行的顏色*/
+    color: white;
+    text-decoration: none;
+    line-height: 40px;
+}
+.menu a:hover { /*滑鼠移入按鈕變色*/
+    background-color: #cdbba7;
+    color: #ffffff;
+}
+.menu li:hover > a { /*滑鼠移入第二層選單，第一層按鈕保持變色*/
+    background-color: #cdbba7;
+    color: #ffffff;
+}
+.menu ul {
+    border: #f7e8dd 1px solid;
+    position: absolute;
+    z-index: 99;
+    left: -1px;
+    top: 100%;
+    min-width: 150px;
+}
+.menu ul li {
+    border-bottom: #f7e8dd 1px solid;
+}
+.menu ul li:last-child {
+    border-bottom: none;
+}
+.menu ul ul { /*第三層以後的選單出現位置與第二層不同*/
+    z-index: 999;
+    top: 0;
+    left: 90%;
+}
+.menu ul { /*隱藏次選單*/
+    left: -99999px; /*設定成最大的負數，將元素放到可視範圍外*/
+    opacity: 0; /*完全透明*/
+    -webkit-transition: opacity 0.6s;
+    transition: opacity 0.6s;
+}
+.menu li:hover > ul { /*滑鼠移入展開選單*/
+    opacity: 1;
+    -webkit-transition: opacity 0.6s;
+    transition: opacity 0.6s;
+    left: -1px;
+    border-right: 5px;
+}
+.menu li:hover > ul ul { /*滑鼠移入時，次選單之後的選單依然隱藏*/
+    left: -99999px;
+}
+.menu ul li:hover > ul { /*第二層之後的選單位置*/
+    left: 90%;
+}
+.left, .middle, .right {
+    padding: 10px;
+    margin: 10px;
+} 
+.left { /*grid左邊的欄*/
+    grid-area: left;
+    background-color: #F5F0E6;
+    border-left: solid 20px #E1D7CE;
+    border-radius: 10px;
+}
+.left img {
+    border-radius: 10px; /* 設定圖片邊角為 10px，使其呈現圓角 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加陰影效果 */
+    display: block; 
+    margin: auto;    
+}
+.middle { /*grid中間的欄*/
+    grid-area: middle;
+    background-color: #F5F0E6;
+    border-radius: 10px;
+}
+.middle img {
+    height: 80%;
+    width: 100%;
+    object-fit: cover; /*填滿元素的寬度及高度(維持原比例)，超出的會裁剪掉*/   
+}  
+.right { /*grid右邊的欄*/
+    grid-area: right;
+    background-color: #F5F0E6;
+    border-top: solid 20px #E1D7CD;
+    border-bottom: solid 20px #E1D7CD;
+    border-radius: 10px;
+}
+/* 相片框 */
+div.polaroid {
+    width: 45%;
+    background-color: rgba(255, 255, 255, 0.5); /* 使用 rgba 表示法設置背景色為白色並設置透明度為 0.9 */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 20px; /* 增加底部間距，使其看起來更整齊 */
+    float: left;
+    margin: 20px; /* 一次設置外邊距 */
+    border-radius: 10px; /* 添加圓角 */
+    overflow: hidden; /* 隱藏超出邊界的內容 */
+    transition: transform 0.3s ease; /* 添加平滑的移動效果 */ 
+}
+.box {
+    position: relative;
+}
+.block {
+    display: flex;
+}
+/* 滑鼠移入時的效果 */
+div.polaroid:hover {
+    transform: translateY(-5px); /* 往上移動一點點 */
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19); /* 增加陰影大小 */
+}
+/* 內容容器 */
+div.polaroid .container {
+    padding: 2px;   
+}
+/* 圖片 */
+div.polaroid img {
+    width: 100%; /* 讓圖片填滿容器 */
+     /* 讓圖片的高度按比例自動調整 */
+    transition: transform 0.8s ease; /* 添加平滑的移動效果 */
+}
+div.polaroid:hover img {
+    transform: scale(1.1); /* 滑過時放大圖片 */
+}
+/*div.polaroid:hover img {
+    transform: rotate(360deg); /* 滑過時旋轉圖片360度 */
+}*/
+/* 圖片滑過時翻轉 */
+/*div.polaroid:hover img {
+    transform: rotateY(180deg); /* 翻轉圖片 */
+}*/
+/* 圖片移入時的效果 */
+/*div.polaroid:hover img {
+    transform: scale(1.1); /* 圖片放大一點點 */
+}*/
+div.container {
+    text-align: center; /* 文字置中 */
+    font-size: 1.2em; /* 調整文字大小 */
+    font-weight: bold; /* 加粗文字 */
+    color: #333; /* 調整文字顏色 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 添加陰影效果 */
+    margin-top: 10px; /* 增加上方間距 */
+}
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both; /*清除浮動*/
+}
+
+h1 {
+    position: relative;
+    padding: 0.25em 1em;
+    border-top: solid 2px #f7e8dd;
+    border-bottom: solid 2px #f7e8dd;
+}
+h1:before, h1:after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    width: 2px;
+    height: -webkit-calc(100% + 20px);
+    height: calc(100% + 20px);
+    background-color: #f7e8dd;
+}
+h1:before {
+    left: 10px;
+}
+h1:after {
+    right: 10px;
+}
+h2 {
+    position: relative;
+    background: #E1D7CD;
+    padding: 2px 5px 2px 20px;    
+    color: #837561;
+    border-radius: 0 10px 10px 0;    
+}
+h2:before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f19c";
+    display: inline-block;
+    line-height: 40px;
+    position: absolute;
+    padding: 0em;
+    color: white;
+    background: #B49680;
+    font-weight: 900;
+    width: 40px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    left: -1em;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    border-radius: 50%;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.29);
+}
+h3 {
+    color: #B49680;
+    border-bottom: double 5px #B49680;
+}
+h3:before {
+    font-family: "Font Awesome 6 Free";
+    
+    padding-right : 5px; /*文字間距*/
+}
+/*
+p {
+    text-align: justify;
+    font-size: 16px;
+    letter-spacing: 0.5px; 
+}
+*/
+.list-menu {
+    font-weight: bolder;
+    background: #E1D7CD;
+    border-radius: 10px 0 0 10px;
+    margin-bottom: 5px;
+    line-height: 1.5;
+    padding: 0.5em;
+}
+.list-menu a {
+    color: #FFFFFF;
+}
+.list-menu a:hover {
+    font-size: 130%;
+}
+/*footer樣式設定*/
+footer {
+    grid-area: footer;
+    background-color: #E1D7CD;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+}
+footer a {  
+    color: #050505;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none; 
+}  
+footer a:hover { 
+    color: #858685;
+}
+footer p {
+    text-align: center;
+}
+/* Responsive layout*/
+@media (max-width: 600px) {
+    .grid-container  {
+        grid-template-areas: 
+            'header header header header header header' 
+            'nav nav nav nav nav nav'
+            'slider slider slider slider slider slider'
+            'left left left left left left' 
+            'middle middle middle middle middle middle' 
+            'right right right right right right' 
+            'footer footer footer footer footer footer';
+    }
+}

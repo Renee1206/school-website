@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-Tw">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行事曆</title>
+    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            animation: float 3s ease-in-out infinite;
+            display: none; /* 初始化為隱藏 */
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        .header {
+            margin-left: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+        .back-to-home {
+            position: absolute;
+            right: 150px;
+            top: 47%;
+            transform: translateY(-50%);
+            background-color: #B3BCCC;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .back-to-home a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .back-to-home:hover {
+            background-color: #555;
+        }
+        .info {
+            font-size: 14px;
+            color: #666;
+            margin-left: 75px;
+            margin-bottom: 50px;
+        }
+        .content_list {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-left: 475px;
+        }
+        .list-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5px;
+        }
+        .list1 {
+            width: 400px;
+            margin-right: 20px;
+        }
+        .preview-btn, .download-btn {
+            margin-left: 10px;
+            padding: 5px 10px;
+            border-radius: 3px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .preview-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .preview-btn:hover {
+            background-color: white;
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+        }
+        .download-btn {
+            background-color: #008CBA;
+            color: white;
+        }
+        .download-btn:hover {
+            background-color: white;
+            color: #008CBA;
+            border: 1px solid #008CBA;
+        }
+        .content_free {
+            display: flex;
+            margin-left: 200px;
+        }
+        .content_free iframe {
+            border: 1px solid #777;
+        }
+        .header-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .dynamic-image {
+            width: 400px;
+            height: auto;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out forwards;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+        .dynamic-image:hover {
+            animation: enlargeAndMove 1s ease-in-out forwards;
+        }
+        @keyframes enlargeAndMove {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1) translateX(20px);
+            }
+        }
+        .dynamic-image:hover {
+            transform: scale(1.1) translateX(10px);
+        }
+        .dynamic-image.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <main class="grid-container">
+        <header>
+            <div class="search-container">
+                <form id="search-form">
+                    <input type="text" id="search-input" placeholder="輸入搜尋內容...">
+                    <button type="submit">搜尋</button>
+                </form>
+            </div>
+            <div id="search-results"></div>
+            <div><a href="index.html">
+                <input type="image" src="img/school-logo-header.png"></a>
+            </div>
+            <div class="font-controls">
+                <button onclick="changeFontSize(-1)">A-</button>
+                <button onclick="resetFontSize()">A</button>
+                <button onclick="changeFontSize(1)">A+</button>
+            </div>
+            <script>
+                function changeFontSize(value) {
+                    let currentSize = parseFloat(window.getComputedStyle(document.body).fontSize);
+                    let newSize = currentSize + value;
+                    document.body.style.fontSize = Math.max(12, Math.min(30, newSize)) + 'px';
+                }
+                function resetFontSize() {
+                    document.body.style.fontSize = '16px';
+                }
+                document.getElementById("search-form").addEventListener("submit", function (event) {
+                    event.preventDefault();
+                    const searchInput = document.getElementById("search-input").value.toLowerCase();
+                    const navLinks = document.querySelectorAll("nav a");
+                    const listItems = document.querySelectorAll(".list-menu a");
+                    let searchResults = "";
+                    navLinks.forEach(link => {
+                        if (link.textContent.toLowerCase().includes(searchInput)) {
+                            searchResults += "<p><a href='" + link.href + "'>" + link.textContent + "</a></p>";
+                        }
+                    });
+                    listItems.forEach(item => {
+                        if (item.textContent.toLowerCase().includes(searchInput)) {
+                            searchResults += "<p><a href='" + item.href + "'>" + item.textContent + "</a></p>";
+                        }
+                    });
+                    if (searchResults === "") {
+                        searchResults = "<p>沒有找到匹配的結果。</p>";
+                    }
+                    const dialog = document.createElement("dialog");
+                    dialog.className = "dialog-container";
+                    dialog.innerHTML = searchResults;
+                    dialog.style.width = "70%";
+                    const closeButton = document.createElement("button");
+                    closeButton.textContent = "✖";
+                    closeButton.className = "close-btn";
+                    closeButton.style.position = "absolute";
+                    closeButton.style.top = "5px";
+                    closeButton.style.right = "5px";
+                    closeButton.onclick = function() {
+                        dialog.close();
+                    };
+                    dialog.appendChild(closeButton);
+                    document.body.appendChild(dialog);
+                    setTimeout(function() {
+                        dialog.showModal();
+                    }, 0);
+                });
+                document.addEventListener('DOMContentLoaded', (event) => {
+                    const downloadBtns = document.querySelectorAll('.download-btn');
+                    downloadBtns.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const filePath = btn.dataset.filePath;
+                            const downloadLink = document.createElement('a');
+                            downloadLink.href = filePath;
+                            downloadLink.download = '';
+                            document.body.appendChild(downloadLink);
+                            downloadLink.click();
+                            document.body.removeChild(downloadLink);
+                        });
+                    });
+
+                    // 動態圖片顯示效果
+                    const dynamicImage = document.querySelector('.dynamic-image');
+                    setTimeout(() => {
+                        dynamicImage.classList.add('visible');
+                    }, 550); // 延遲1000毫秒後顯示圖片
+                });
+            </script>
+        </header>
+        <nav><ul class="menu">
+                <li><a href="index.html">回首頁</a>
+                </li>
+                <li><a href="school-profile.html"><i class="fas fa-info-circle"></i> 認識東中</a>
+                    <ul>
+                        <li><a href="school-profile.html#0001"><i class="fas fa-shield-alt"></i> 校徽與校訓</a></li>
+                        <li><a href="school-profile.html#0002"><i class="fas fa-music"></i> 校歌</a></li>
+                        <li><a href="school-profile.html#0003"><i class="fas fa-map-marked-alt"></i> 地理交通</a></li>
+                        <li><a href="school-profile.html#0004"><i class="fas fa-map"></i> 校園平面圖</a></li>
+                        <li><a href="https://www.facebook.com/ctsh.hcc.edu.tw/?ref=embed_page" target="_blank" ><i class="fab fa-facebook-square"></i> FB粉絲團</a></li>
+                    </ul>
+                </li>
+                <li><a href="administrative-offices.html"><i class="fas fa-building"></i> 行政單位</a>
+                    <ul>
+                        <li><a href="administrative-offices.html#0200"><i class="fas fa-user-tie"></i> 校長室</a></li>
+                        <li><a href="administrative-offices.html#0201"><i class="fas fa-graduation-cap"></i> 教務處</a></li>
+                        <li><a href="administrative-offices.html#0202"><i class="fas fa-user-graduate"></i> 學務處</a></li>
+                        <li><a href="administrative-offices.html#0203"><i class="fas fa-briefcase"></i> 總務處</a></li>
+                        <li><a href="administrative-offices.html#0204"><i class="fas fa-user-friends"></i> 輔導處</a></li>
+                        <li><a href="administrative-offices.html#0205"><i class="fas fa-book"></i> 圖書館</a></li>
+                        <li><a href="administrative-offices.html#0206"><i class="fas fa-user"></i> 人事室</a></li>
+                        <li><a href="administrative-offices.html#0207"><i class="fas fa-calculator"></i> 主計室</a></li>
+                        <li><a href="administrative-offices.html#0208"><i class="fas fa-chalkboard-teacher"></i> 教官室</a></li>
+                        <li><a href="administrative-offices.html#0209"><i class="fas fa-user-graduate"></i> 進修部</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1EZ3lNelV4TWpRPTBrRE0zY1ROeFlrVGludGVseQ==&c=T0RESU1UZ3dPRGsyTkRFPXdFVE0wQWpOeElrVGludGVseQ==&d="  target="_blank"><i class="fas fa-scroll"></i> 校務章則</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU5UVXlPRFV5T1RRPTVVVE0zY1ROeGNsVGludGVseQ==" target="_blank"><i class="fas fa-phone"></i> 處室分機</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#"><i class="fas fa-user-graduate"></i> 學生專區</a>
+                    <ul>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/Self-learning/" target="_blank"><i class="fas fa-book-open"></i> 自主學習</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1qY3pPREUzT0RRPTVrek13a1ROeGNsVGludGVseQ==" target="_blank"><i class="fas fa-university"></i> 大學榜單</a></li>
+                        <li><a href="https://jg8web.jhenggao.com/iSystemEntrance/" target="_blank"><i class="fas fa-university"></i> 大學選考系統入考</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/schoolbus/" target="_blank"><i class="fas fa-bus"></i> 學生交通車專區</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1UQXpPVFF6T0RFPTBrRE0zY1ROeFlrVGludGVseQ==&c=T0RESU5USTFNRE0yTlRVPTBrak0wQWpOeElrVGludGVseQ==&d=" target="_blank"><i class="fas fa-file-alt"></i> 學生手冊(含請假單)</a></li>
+                        <li><a href="https://collego.edu.tw/"><i class="fas fa-graduation-cap"></i> ColleGo!輔助系統</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU56UTBNVFF6TlRRPTBZVE81Z1ROeGNsVGludGVseQ=="><i class="fas fa-trophy"></i> 多媒體設計競賽</a></li>
+                    </ul>
+                </li>
+                <li><a href="new-students.html"><i class="fas fa-baby"></i> 新生專區</a>
+                   
+                </li>
+                <li><a href="#"><i class="fas fa-users"></i> 其他組織</a>
+                    <ul>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1UZ3hNRFV5TXpjPXlRRE00Y1ROeGNsVGludGVseQ==" target="_blank"><i class="fas fa-user-friends"></i> 家長會</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1qY3lNek00TVRVPXlRRE00Y1ROeGNsVGludGVseQ==" target="_blank"><i class="fas fa-users"></i> 校友會</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/teacher/" target="_blank"><i class="fas fa-users"></i> 教師會</a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="fas fa-link"></i> 常用連結</a>
+            <ul>
+                <li><a href="https://sch.ctsh.hcc.edu.tw/classtable/" target="_blank"><i class="fas fa-calendar-alt"></i> 課表查詢系統</a></li>
+                <li><a href="https://ctsh.teams.com.tw/login.html" target="_blank"><i class="fas fa-globe"></i> 竹東高中數位雲端學習學院</a></li>
+                <li><a href="https://sites.google.com/view/ctshpicture/" target="_blank"><i class="fas fa-images"></i> 網路相簿</a></li>
+                <li><a href="https://www.youtube.com/user/ctshbcc"  target="_blank"><i class="fas fa-film"></i> 活動影片</a></li>
+                <li><a href="https://eng.ctsh.hcc.edu.tw/livegept/login/login.php" target="_blank"><i class="fas fa-pen"></i> 全民英檢系統</a></li>
+            </ul>
+        </li>
+                <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1qUTVPVFE0TWprPTBRVE13UWpOeGNsVGludGVseQ==" target="_blank"><i class="fas fa-file-archive"></i> 學習歷程檔案</a>
+              
+                </li>
+                <li>
+                    <a href="academic-calendar.html"><i class="fas fa-calendar-alt"></i> 行事曆</a> 
+                </li>
+            </ul>
+        </nav>
+        <script>
+            window.addEventListener('scroll', function() {
+                var nav = document.querySelector('nav');
+                if (window.scrollY > 0) {
+                    nav.classList.add('sticky');
+                } else {
+                    nav.classList.remove('sticky');
+                }
+            });
+        </script>
+        <section>
+            <div class="header">
+                <div class="header-container">
+                    <h1>行事曆</h1>
+                    <img src="img/calendar-header-illustration.png" class="dynamic-image">
+                </div>
+                <div class="info">
+                    發佈單位: 學校&nbsp;&nbsp;&nbsp;&nbsp;發佈人: 資訊媒體組<br>
+                    最後更新時間: 2024-04-15 14:32:12
+                </div>
+                
+
+                   
+                
+            </div>
+
+            <div class="content_list">
+                <div class="list-container">
+                    <p class="list1">112學年度第1學期行事曆-學生版</p>
+                    <div class="button-container">
+                        <a href="file/student-calendar-2023-fall.pdf" target="_blank" class="preview-link">
+                            <button class="preview-btn">預覽</button>
+                        </a>
+                        <button class="download-btn" data-file-path="file/student-calendar-2023-fall.pdf">下載</button>
+                    </div>
+                </div>
+
+                <!-- 新增內容區塊 -->
+                <div class="list-container">
+                    <p class="list1">112學年第1學期行事曆(經1003會議通過)</p>
+                    <div class="button-container">
+                        <a href="file/staff-calendar-2023-fall.pdf" target="_blank" class="preview-link">
+                            <button class="preview-btn">預覽</button>
+                        </a>
+                        <button class="download-btn" data-file-path="file/staff-calendar-2023-fall.pdf">下載</button>
+                    </div>
+                </div>
+
+                <div class="list-container">
+                    <p class="list1">112學年度第2學期暨暑期行事曆-學生版</p>
+                    <div class="button-container">
+                        <a href="file/student-calendar-2024-spring-summer.pdf" target="_blank" class="preview-link">
+                            <button class="preview-btn">預覽</button>
+                        </a>
+                        <button class="download-btn" data-file-path="file/student-calendar-2024-spring-summer.pdf">下載</button>
+                    </div>
+                </div>
+                <div class="list-container">
+                    <p class="list1">112學年度第2學期團體活動課程總表</p>
+                    <div class="button-container">
+                        <a href="file/group-activity-schedule-2024-spring.pdf" target="_blank" class="preview-link">
+                            <button class="preview-btn">預覽</button>
+                        </a>
+                        <button class="download-btn" data-file-path="file/group-activity-schedule-2024-spring.pdf">下載</button>
+                    </div>
+                </div>
+                <div class="list-container">
+                    <p class="list1">112學年第2學期暨暑假行事曆(0402擴大行政會議通過)</p>
+                    <div class="button-container">
+                        <a href="file/staff-calendar-2024-spring.pdf" target="_blank" class="preview-link">
+                            <button class="preview-btn">預覽</button>
+                        </a>
+                        <button class="download-btn" data-file-path="file/staff-calendar-2024-spring.pdf">下載</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content_free" data-neededitor="" data-needcontrol="" data-object-type="p">
+                <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FTaipei&amp;src=Y3RzaHNjaEBnbWFpbC5jb20&amp;color=%234285F4" style="border:solid 1px #777" width="1100" height="675" frameborder="0" scrolling="no" title="行事曆"></iframe>
+            </div> 
+        </section>
+        
+        <footer>
+            <p><a href="https://www.ctsh.hcc.edu.tw/" style="color: #333" target="_blank">國立竹東高級中學 National Chutung Senior High School</a></p>
+        <p>
+            <i class="fas fa-phone" style="color: #333;"></i>
+            <a href="tel:+886-3-6211166" style="color: #333;">03-6211166</a>
+        </p>
+        <p>傳真：03-5944069</p>
+        <p>
+            <i class="fas fa-map-marker-alt" style="color: #333;"></i>
+            <a href="https://maps.google.com/?q=31046+新竹縣竹東鎮大林路二號" style="color: #333;" target="_blank">校址：31046 新竹縣竹東鎮大林路二號</a>
+        </p>
+        <a href="https://www.facebook.com/ctsh.hcc.edu.tw/?ref=embed_page" target="_blank"><i class="fa-brands fa-facebook fa-fw fa-2x"></i>facebook</a>
+        <a href="https://www.youtube.com/@ctshbcc" target="_blank"><i class="fa-brands fa-youtube fa-fw fa-2x"></i> YouTube</a>
+        </footer>
+        <img src="img/back-to-top-rocket.png" id="back-to-top" alt="Back to Top">
+        <script>
+    // 當滾動時顯示/隱藏火箭按鈕
+    window.addEventListener('scroll', function() {
+        const backToTopButton = document.getElementById('back-to-top');
+        if (window.scrollY > 200) { // 滾動超過200px時顯示按鈕
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
+
+    // 點擊火箭按鈕返回頂部
+    document.getElementById('back-to-top').addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+    </main>
+</body>
+</html>

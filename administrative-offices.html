@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-Tw">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行政單位</title>
+    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        #back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    animation: float 3s ease-in-out infinite;
+    display: none; /* 初始化為隱藏 */
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+        .header {
+            margin-left: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+        .back-to-home {
+            position: absolute;
+            right: 150px;
+            top: 47%;
+            transform: translateY(-50%);
+            background-color: #B3BCCC;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .back-to-home a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .back-to-home:hover {
+            background-color: #555;
+        }
+         h3 {
+            border-bottom: none;
+        }
+       .administrative-units {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-left: 175px
+}
+
+.unit {
+        width: 48%;
+        background-color: #f8f8f8;
+        padding: 20px;
+        margin: 1%;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    position: relative;
+    padding-bottom: 90px; /* 為按鈕預留空間 */
+    }
+
+    .unit:hover {
+        transform: translateY(-5px) scale(1.1);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+.unit h3 {
+    color: #4d4d4d;
+    margin-bottom: 10px;
+}
+
+.unit p {
+    color: #666;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .unit {
+        width: 48%;
+    }
+}
+
+@media (max-width: 480px) {
+    .unit {
+        width: 100%;
+    }
+}
+    .button {
+    display: inline-block;
+    background-color: #ff6600;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    position: absolute;
+    bottom: 30px; /* 調整底部位置以容納投影 */
+    right: 20px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3); /* 添加陰影 */
+}
+        
+        .button:hover {
+    background-color: #cc5500;
+    transform: translateY(-3px); /* 懸停時上浮 3 像素 */
+    box-shadow: 0 12px 20px rgba(0,0,0,0.4); /* 增強陰影效果 */
+        }
+        .arrow {
+    font-size: 0.8em;
+    margin-left: 5px;
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <main class="grid-container">
+        <header>
+            <div class="search-container">
+                <form id="search-form">
+                    <input type="text" id="search-input" placeholder="輸入搜尋內容...">
+                    <button type="submit">搜尋</button>
+                </form>
+            </div>
+            <div id="search-results"></div>
+            <div><a href="index.html">
+                <input type="image" src="img/school-logo-header.png"></a>
+            </div>
+            <div class="font-controls">
+                <button onclick="changeFontSize(-1)">A-</button>
+                <button onclick="resetFontSize()">A</button>
+                <button onclick="changeFontSize(1)">A+</button>
+            </div>
+            <script>
+                function changeFontSize(value) {
+                    let currentSize = parseFloat(window.getComputedStyle(document.body).fontSize);
+                    let newSize = currentSize + value;
+                    document.body.style.fontSize = Math.max(12, Math.min(30, newSize)) + 'px';
+                }
+                function resetFontSize() {
+                    document.body.style.fontSize = '16px';
+                }
+                document.getElementById("search-form").addEventListener("submit", function (event) {
+                    event.preventDefault();
+                    const searchInput = document.getElementById("search-input").value.toLowerCase();
+                    const navLinks = document.querySelectorAll("nav a");
+                    const listItems = document.querySelectorAll(".list-menu a");
+                    let searchResults = "";
+                    navLinks.forEach(link => {
+                        if (link.textContent.toLowerCase().includes(searchInput)) {
+                            searchResults += "<p><a href='" + link.href + "'>" + link.textContent + "</a></p>";
+                        }
+                    });
+                    listItems.forEach(item => {
+                        if (item.textContent.toLowerCase().includes(searchInput)) {
+                            searchResults += "<p><a href='" + item.href + "'>" + item.textContent + "</a></p>";
+                        }
+                    });
+                    if (searchResults === "") {
+                        searchResults = "<p>沒有找到匹配的結果。</p>";
+                    }
+                    const dialog = document.createElement("dialog");
+                    dialog.className = "dialog-container";
+                    dialog.innerHTML = searchResults;
+                    dialog.style.width = "70%";
+                    const closeButton = document.createElement("button");
+                    closeButton.textContent = "✖";
+                    closeButton.className = "close-btn";
+                    closeButton.style.position = "absolute";
+                    closeButton.style.top = "5px";
+                    closeButton.style.right = "5px";
+                    closeButton.onclick = function() {
+                        dialog.close();
+                    };
+                    dialog.appendChild(closeButton);
+                    document.body.appendChild(dialog);
+                    setTimeout(function() {
+                        dialog.showModal();
+                    }, 0);
+                });
+                
+            </script>
+        </header>
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html">回首頁</a>
+                </li>
+                <li><a href="school-profile.html"><i class="fas fa-info-circle"></i> 認識東中</a>
+                    <ul>
+                        <li><a href="school-profile.html#0001"><i class="fas fa-shield-alt"></i> 校徽與校訓</a></li>
+                        <li><a href="school-profile.html#0002"><i class="fas fa-music"></i> 校歌</a></li>
+                        <li><a href="school-profile.html#0003"><i class="fas fa-map-marked-alt"></i> 地理交通</a></li>
+                        <li><a href="school-profile.html#0004"><i class="fas fa-map"></i> 校園平面圖</a></li>
+                        <li><a href="https://www.facebook.com/ctsh.hcc.edu.tw/?ref=embed_page"  target="_blank"><i class="fab fa-facebook-square"></i> FB粉絲團</a></li>
+                    </ul>
+                </li>
+                <li><a href="administrative-offices.html"><i class="fas fa-building"></i> 行政單位</a>
+                    <ul>
+                        <li><a href="administrative-offices.html#0200"><i class="fas fa-user-tie"></i> 校長室</a></li>
+                        <li><a href="administrative-offices.html#0201"><i class="fas fa-graduation-cap"></i> 教務處</a></li>
+                        <li><a href="administrative-offices.html#0202"><i class="fas fa-user-graduate"></i> 學務處</a></li>
+                        <li><a href="administrative-offices.html#0203"><i class="fas fa-briefcase"></i> 總務處</a></li>
+                        <li><a href="administrative-offices.html#0204"><i class="fas fa-user-friends"></i> 輔導處</a></li>
+                        <li><a href="administrative-offices.html#0205"><i class="fas fa-book"></i> 圖書館</a></li>
+                        <li><a href="administrative-offices.html#0206"><i class="fas fa-user"></i> 人事室</a></li>
+                        <li><a href="administrative-offices.html#0207"><i class="fas fa-calculator"></i> 主計室</a></li>
+                        <li><a href="administrative-offices.html#0208"><i class="fas fa-chalkboard-teacher"></i> 教官室</a></li>
+                        <li><a href="administrative-offices.html#0209"><i class="fas fa-user-graduate"></i> 進修部</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1EZ3lNelV4TWpRPTBrRE0zY1ROeFlrVGludGVseQ==&c=T0RESU1UZ3dPRGsyTkRFPXdFVE0wQWpOeElrVGludGVseQ==&d="  target="_blank"><i class="fas fa-scroll"></i> 校務章則</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU5UVXlPRFV5T1RRPTVVVE0zY1ROeGNsVGludGVseQ==" target="_blank"><i class="fas fa-phone"></i> 處室分機</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#"><i class="fas fa-user-graduate"></i> 學生專區</a>
+                    <ul>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/Self-learning/" target="_blank"><i class="fas fa-book-open"></i> 自主學習</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1qY3pPREUzT0RRPTVrek13a1ROeGNsVGludGVseQ==" target="_blank"><i class="fas fa-university"></i> 大學榜單</a></li>
+                        <li><a href="https://jg8web.jhenggao.com/iSystemEntrance/" target="_blank"><i class="fas fa-university"></i> 大學選考系統入考</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/schoolbus/" target="_blank"><i class="fas fa-bus"></i> 學生交通車專區</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1UQXpPVFF6T0RFPTBrRE0zY1ROeFlrVGludGVseQ==&c=T0RESU5USTFNRE0yTlRVPTBrak0wQWpOeElrVGludGVseQ==&d=" target="_blank"><i class="fas fa-file-alt"></i> 學生手冊(含請假單)</a></li>
+                        <li><a href="https://collego.edu.tw/"><i class="fas fa-graduation-cap"></i> ColleGo!輔助系統</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU56UTBNVFF6TlRRPTBZVE81Z1ROeGNsVGludGVseQ=="><i class="fas fa-trophy"></i> 多媒體設計競賽</a></li>
+                    </ul>
+                </li>
+                <li><a href="new-students.html"><i class="fas fa-baby"></i> 新生專區</a>
+                   
+                </li>
+                <li><a href="#"><i class="fas fa-users"></i> 其他組織</a>
+                    <ul>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1UZ3hNRFV5TXpjPXlRRE00Y1ROeGNsVGludGVseQ==" target="_blank"><i class="fas fa-user-friends"></i> 家長會</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1qY3lNek00TVRVPXlRRE00Y1ROeGNsVGludGVseQ==" target="_blank"><i class="fas fa-users"></i> 校友會</a></li>
+                        <li><a href="https://www.ctsh.hcc.edu.tw/teacher/" target="_blank"><i class="fas fa-users"></i> 教師會</a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="fas fa-link"></i> 常用連結</a>
+            <ul>
+                <li><a href="https://sch.ctsh.hcc.edu.tw/classtable/" target="_blank"><i class="fas fa-calendar-alt"></i> 課表查詢系統</a></li>
+                <li><a href="https://ctsh.teams.com.tw/login.html" target="_blank"><i class="fas fa-globe"></i> 竹東高中數位雲端學習學院</a></li>
+                <li><a href="https://sites.google.com/view/ctshpicture/" target="_blank"><i class="fas fa-images"></i> 網路相簿</a></li>
+                <li><a href="https://www.youtube.com/user/ctshbcc"  target="_blank"><i class="fas fa-film"></i> 活動影片</a></li>
+                <li><a href="https://eng.ctsh.hcc.edu.tw/livegept/login/login.php" target="_blank"><i class="fas fa-pen"></i> 全民英檢系統</a></li>
+            </ul>
+        </li>
+                <li><a href="https://www.ctsh.hcc.edu.tw/content?a=T0RESU1qUTVPVFE0TWprPTBRVE13UWpOeGNsVGludGVseQ==" target="_blank"><i class="fas fa-file-archive"></i> 學習歷程檔案</a>
+              
+                </li>
+                <li>
+                    <a href="academic-calendar.html"><i class="fas fa-calendar-alt"></i> 行事曆</a> 
+                </li>
+            </ul>
+        </nav>
+        <script>
+            window.addEventListener('scroll', function() {
+                var nav = document.querySelector('nav');
+                if (window.scrollY > 0) {
+                    nav.classList.add('sticky');
+                } else {
+                    nav.classList.remove('sticky');
+                }
+            });
+        </script>
+        <section>
+    <div class="header">
+        <h1 id="123">行政單位</h1>
+        
+    </div>
+
+    <div class="administrative-units" >
+        <div class="unit" id="0200">
+    <h3><i class="fas fa-user-tie"></i> 校長室</h3>
+    <div style="display: flex; align-items: center;">
+        <img src="img/principal-office.jpg" alt="校長照片" style="width: 150px; height: 170px; margin-right: 20px;">
+        <div style="text-align: left;">
+            <p>
+                <strong>校長：</strong> 彭德和<br>
+                <strong>學歷：</strong><br>
+                玄奘大學中國文學研究所碩士<br>
+                <strong>經歷：</strong><br>
+                導師、訓育組長、衛生組長、註冊組長、教學組長、圖書館主任、國文科召集人、教務主任、秘書、代理校長
+            </p>
+            <a href="https://www.ctsh.hcc.edu.tw/principal/content?a=T0RESU1UY3pOREEyTURFPXlrRE0zY1ROeGNsVGludGVseQ==" class="button" target="_blank">View All <span class="arrow" >&#8594;</span></a>
+        </div>
+    </div>
+</div>
+
+
+
+
+        <div class="unit" id="0201">
+            <h3><i class="fas fa-graduation-cap"></i> 教務處</h3>
+            <div style="display: flex; align-items: center;">
+                <img src="img/academic-affairs-office.jpg"  style="width: 150px; height: 170px; margin-right: 20px;">
+        <div style="text-align: left;">
+            <p>
+                <strong>教務處：</strong>負責課程教學、學籍管理、實驗研究與教學設備等業務及其有關事項。<br>
+                <strong>教務處聯絡電話 ：03-6211166、03-5962024 </strong><br>
+                <strong>傳真：(03)5941551</strong><br>
+                <strong>組別：</strong>教學組，註冊組，設備組，實驗研究組，課程諮詢
+                
+            </p>
+            <a href="https://www.ctsh.hcc.edu.tw/academic/" class="button" target="_blank">View All <span class="arrow" >&#8594;</span></a>
+        </div>
+    </div>
+        </div>
+        <div class="unit" id="0202">
+            <h3><i class="fas fa-user-graduate"></i> 學務處</h3>
+            
+            <div style="display: flex; align-items: center;">
+                <img src="img/student-affairs-office.jpg"  style="width: 150px; height: 180px; margin-right: 20px;">
+        <div style="text-align: left;">
+            <p>
+                <strong>學務處：</strong>負責學生活動、生活輔導、生活教育、衛生保健及體育活動等業務及其有關事項。<br>
+                <strong>學務處聯絡電話: 03-6211166、03-5962024</strong><br>
+                <strong>傳真：(03)5100079</strong><br>
+                <strong>組別：</strong>教官室，訓育組，衛生組，體育組，社團活動組，生活輔導組
+                
+            </p>
+            <a href="https://www.ctsh.hcc.edu.tw/student/" class="button" target="_blank">View All <span class="arrow" >&#8594;</span></a>
+        </div>
+    </div>
+        </div>
+        <div class="unit" id="0203">
+            <h3><i class="fas fa-user-graduate"></i> 總務處</h3>
+            <div style="display: flex; align-items: center;">
+                <img src="img/general-affairs-office.jpg"  style="width: 150px; height: 180px; margin-right: 20px;">
+        <div style="text-align: left;">
+            <p>
+                <strong>總務處：</strong>學校設施設備維修管理、校舍及財產管理、環境綠美化、公文及檔案管理、全校各項出納業務及其有關事項。<br>
+                <strong>總務處聯絡電話:03-6211166、03-5962024 </strong><br>
+                <strong>傳真：03-5944069</strong><br>
+                <strong>組別：</strong>庶務組，文書組，出納組
+                
+            </p>
+            <a href="https://www.ctsh.hcc.edu.tw/general/" class="button" target="_blank">View All <span class="arrow" >&#8594;</span></a>
+        </div>
+    </div>
+        </div>
+        <div class="unit" id="0204">
+            <h3><i class="fas fa-user-friends"></i> 輔導處</h3>
+            <div style="display: flex; align-items: center;">
+                <img src="img/counseling-office.jpg"  style="width: 150px; height: 180px; margin-right: 20px;">
+        <div style="text-align: left;">
+            <p>
+                <strong>輔導處：</strong>負責個別諮商、團體輔導、心理測驗、活動研習，輔導刊物，升學資訊，諮詢轉介，各項輔導工作推展<br>
+                <strong>輔導處分機:600~604</strong><br>
+                <strong>傳真:03-5942428</strong><br>
+                <strong>親職諮詢專線：03-5945998</strong>
+                
+            </p>
+            <a href="https://www.ctsh.hcc.edu.tw/guide/" class="button" target="_blank">View All <span class="arrow" >&#8594;</span></a>
+        </div>
+    </div>
+        </div>
+        <div class="unit" id="0205">
+            <h3><i class="fas fa-book"></i> 圖書館</h3>
+            <div style="display: flex; align-items: center;">
+                <img src="img/library-office.png"  style="width: 150px; height: 180px; margin-right: 20px;">
+        <div style="text-align: left;">
+            <p>
+                <strong>圖書館：</strong>本校圖書館的主要任務， 在於搜集、分析、整理、運用圖書資訊，以支援教學與研究，培養獨力學習繼續教育自己的觀念，並提昇使用媒體資源、資訊科技的涵養，以適應時代的需要。<br>
+                <strong>圖書館分機:610~612 </strong><br>
+                <strong>傳真：03-5959516</strong><br>
+                
+                
+            </p>
+            <a href="https://www.ctsh.hcc.edu.tw/libinfo/" class="button" target="_blank">View All <span class="arrow" >&#8594;</span></a>
+        </div>
+    </div>
+        </div>
+        <div class="unit" id="0206">
+            <h3><i class="fas fa-regular fa-user-pen"></i> 人事室</h3>
+            <div style="display: flex; align-items: center;">
+                <img src="img/personnel-office.jpg"  style="width: 150px; height: 180px; margin-right: 20px;">
+                <div style="text-align: left;">
+                    <p>
+                        <strong>人事室：</strong>人事室:負責辦理人事管理事項<br>
+                        <strong>人事室分機:700~702 </strong><br>
+                        <strong>傳真：03-5940959</strong><br>
+                    </p>
+                    <a href="https://www.ctsh.hcc.edu.tw/personnel/" class="button" target="_blank">View All <span class="arrow" >&#8594;</span></a>
+                </div>
+            </div>
+        </div>
+         <div class="unit" id="0207">
+            <h3><i class="fas fa-regular fa-user-pen"></i> 主計室</h3>
+            <div style="display: flex; align-items: center;">
+                <img src="img/accounting-office.jpg"  style="width: 150px; height: 180px; margin-right: 20px;">
+        <div style="text-align: left;">
+            <p>
+                <strong>主計室：</strong>辦理年度概預算之籌編、收入支出經費內部控制與審核及會計帳務之處理等業務<br>
+                <strong>主計室分機:710，712 </strong><br>
+                <strong>傳真：03-5944069</strong><br>
+                
+                
+            </p>
+            <a href="https://www.ctsh.hcc.edu.tw/acc/" class="button" target="_blank">View All <span class="arrow" >&#8594;</span></a>
+        </div>
+    </div>
+        </div>
+        <div class="unit" id="0208">
+            <h3><i class="fas fa-users"></i>教官室</h3>
+            <div style="display: flex; align-items: center;">
+                <img src="img/military-instructor-office.jpg"  style="width: 170px; height: 160px; margin-right: 20px;">
+        <div style="text-align: left;">
+            <p>
+                <strong>教官室:</strong>交通安全教育、 全民國防教育、學生獎懲、改過銷過暨知生識生等業務。<br>
+            </p>
+            <a href="https://www.ctsh.hcc.edu.tw/military/" class="button" target="_blank">View All <span class="arrow" >&#8594;</span></a>
+        </div>
+    </div>
+        </div>
+        <div class="unit" id="0209">
+            <h3><i class="fas fa-users"></i>進修部</h3>
+            <div style="display: flex; align-items: center;">
+                <img src="img/continuing-education-office.jpg"  style="width: 170px; height: 160px; margin-right: 20px;">
+        <div style="text-align: left;">
+            <p>
+                <strong>進修部:</strong>溯自政府實施九年國民義務教育之後，為延長社會教育功能，鼓勵在職青年進修，俾能發揮終身學習效益，公私立國、高中紛紛申請附設補習學校（即前之「進修學校」，今之「進修部」。<br>
+                <strong>進修部專線：</strong>03-5940943 (上班時間:14:00至22:00；寒暑假 8:00至16:30)<br>
+                <strong>傳真: 03-5953893</strong>
+            </p>
+            <a href="https://www.ctsh.hcc.edu.tw/night/" class="button" target="_blank">View All <span class="arrow" >&#8594;</span></a>
+        </div>
+    </div>
+        </div>
+    </div>
+            
+</section>
+        
+        <footer>
+            <p><a href="https://www.ctsh.hcc.edu.tw/" style="color: #333" target="_blank">國立竹東高級中學 National Chutung Senior High School</a></p>
+        <p>
+            <i class="fas fa-phone" style="color: #333;"></i>
+            <a href="tel:+886-3-6211166" style="color: #333;">03-6211166</a>
+        </p>
+        <p>傳真：03-5944069</p>
+        <p>
+            <i class="fas fa-map-marker-alt" style="color: #333;"></i>
+            <a href="https://maps.google.com/?q=31046+新竹縣竹東鎮大林路二號" style="color: #333;" target="_blank">校址：31046 新竹縣竹東鎮大林路二號</a>
+        </p>
+        <a href="https://www.facebook.com/ctsh.hcc.edu.tw/?ref=embed_page" target="_blank"><i class="fa-brands fa-facebook fa-fw fa-2x"></i>facebook</a>
+        <a href="https://www.youtube.com/@ctshbcc" target="_blank"><i class="fa-brands fa-youtube fa-fw fa-2x"></i> YouTube</a>
+        </footer>
+        <img src="img/back-to-top-rocket.png" id="back-to-top" alt="Back to Top">
+        <script>
+        
+    // 當滾動時顯示/隱藏火箭按鈕
+    window.addEventListener('scroll', function() {
+        const backToTopButton = document.getElementById('back-to-top');
+        if (window.scrollY > 200) { // 滾動超過200px時顯示按鈕
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
+
+    // 點擊火箭按鈕返回頂部
+    document.getElementById('back-to-top').addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+    </main>
+</body>
+</html>
